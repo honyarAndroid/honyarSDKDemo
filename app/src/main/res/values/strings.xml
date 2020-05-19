@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">honyarExample</string>
+    <string name="configure_result_success_item">BSSID = %1$s, 地址 = %2$s</string>
+    <string name="test_cmd_commd">
+        {\n
+         \t\"cmd\": \"202\",\n
+         \t\"data\": {\n
+         \t\"relay\":\"255\",\n
+         \t\"switchEnable\":\"255\",\n
+         \t\"clearMeter\":\"0\",\n
+         \t\"voltageThreshold\":\"1.2\",\n
+         \t\"currentThreshold\":\"1.2\",\n
+        \t\"alarm\":{\n
+         \t\t\t\"soundType\":0,\n
+         \t\t\t\"soundLevel\":1,\n
+         \t\t\t\"delayTime\":0,\n
+         \t\t\t\"duration\":5\n
+         \t\t}\n
+         \t}\n
+        }
+    </string>
+    <string name="add_delay_commd">
+        {\n
+         \t\"cmd\": \"207\",\n
+         \t\"time_remaining\":60 ,\n
+         \t\"property\": {\n
+         \t\"relay\":{\n
+         \t\t\t\"relay_set\":255,\n
+         \t\t\t\"relay_value\":255\n
+         \t\t},\n
+         \t\"alarm\":{\n
+         \t\t\t\"soundType\":0,\n
+         \t\t\t\"soundLevel\":1,\n
+         \t\t\t\"duration\":1\n
+         \t\t}\n
+         \t}\n
+        }
+    </string>
+    <string name="delete_delay_commd">
+        {\n
+         \t\"cmd\": \"208\",\n
+         \t\"data\": {\n
+         \t\"index\":1\n
+         \t}\n
+        }
+    </string>
+    <string name="query_delay_commd">
+        {\n
+         \t\"cmd\": \"105\",\n
+         \t\"data\": {\n
+         \t\"index\":1\n
+         \t}\n
+        }
+    </string>
+</resources>
