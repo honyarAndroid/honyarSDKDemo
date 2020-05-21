@@ -17,7 +17,7 @@ import com.honyar.bean.BaseReqBean;
 import com.honyar.bean.DeviceData102;
 import com.honyar.contract.ClearDeviceListener;
 import com.honyar.contract.DeviceListImp;
-import com.honyar.contract.DisConnect;
+import com.honyar.contract.DisConnectListener;
 import com.honyar.contract.DeviceUpDataListener;
 import com.honyar.contract.DoFindDeviceResult;
 import com.honyar.contract.NewDeviceConnectListener;
@@ -28,18 +28,23 @@ import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
 
 import java.util.List;
 
-public class MainActivity extends Activity implements DisConnect,DeviceUpDataListener, NewDeviceConnectListener {
+public class MainActivity extends Activity implements DisConnectListener,DeviceUpDataListener, NewDeviceConnectListener {
     private String TAG = this.getClass().getSimpleName();
     private Gson gson = new Gson();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initData();
+
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
     private void initData(){
-        SDKHonyarSupport.getInstance().deviceDisConnectListener(this);
+        SDKHonyarSupport.getInstance().setDeviceDisConnectListener(this);
         SDKHonyarSupport.getInstance().setDeviceUpDataListener(this);
         SDKHonyarSupport.getInstance().setNewDeviceConnectListener(this);
     }
@@ -67,8 +72,13 @@ public class MainActivity extends Activity implements DisConnect,DeviceUpDataLis
     public void clearDeviceList(View v){
         SDKHonyarSupport.getInstance().clearDeviceList(new ClearDeviceListener() {
             @Override
-            public void clear() {
+            public void clearSuccess() {
                 Log.i(TAG,"clear success");
+            }
+
+            @Override
+            public void clearFaild() {
+
             }
         });
     }
@@ -140,10 +150,6 @@ public class MainActivity extends Activity implements DisConnect,DeviceUpDataLis
         intent.setClass(mcontext, toActivity);
         startActivity(intent);
     }
-    @Override
-    public void disConnect() {
-        Log.i(TAG,"device disconnected");
-    }
 
     @Override
     public void deviceUpData(String data) {
@@ -153,5 +159,10 @@ public class MainActivity extends Activity implements DisConnect,DeviceUpDataLis
     @Override
     public void newDeviceConnected(DeviceData102 deviceData102) {
         Log.i(TAG,"got new data:"+gson.toJson(deviceData102));
+    }
+
+    @Override
+    public void disConnect(String s) {
+        Log.i(TAG,"device disconnected");
     }
 }
