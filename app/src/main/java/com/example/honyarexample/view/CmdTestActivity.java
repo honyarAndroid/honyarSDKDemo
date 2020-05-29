@@ -10,6 +10,7 @@ import com.example.honyarexample.R;
 import com.honyar.SDKHonyarSupport;
 import com.honyar.bean.DeviceData102;
 import com.honyar.contract.DeviceUpDataListener;
+import com.honyar.contract.SendDataListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,7 +69,17 @@ public class CmdTestActivity extends BaseActivity implements View.OnClickListene
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                SDKHonyarSupport.getInstance().sendData(deviceData102.deviceMac,sendData_String);
+                SDKHonyarSupport.getInstance().sendData(deviceData102.deviceMac, sendData_String, new SendDataListener() {
+                    @Override
+                    public void sendFaild(int errorCode, String message) {
+
+                    }
+
+                    @Override
+                    public void sendSuccess() {
+
+                    }
+                });
                 break;
 
             case R.id.control_cmd:

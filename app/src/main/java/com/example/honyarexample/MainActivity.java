@@ -21,6 +21,7 @@ import com.honyar.contract.DisConnectListener;
 import com.honyar.contract.DeviceUpDataListener;
 import com.honyar.contract.DoFindDeviceResult;
 import com.honyar.contract.NewDeviceConnectListener;
+import com.honyar.contract.SendDataListener;
 import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.bean.Permissions;
@@ -66,7 +67,17 @@ public class MainActivity extends Activity implements DisConnectListener,DeviceU
     }
 
     public void sendData(View v){
-        SDKHonyarSupport.getInstance().sendData("68c63a8c156a", "{\"cmd\":\"202\",\"data\":{\"relay\":\"255\"}}");
+        SDKHonyarSupport.getInstance().sendData("68c63a8c156a", "{\"cmd\":\"202\",\"data\":{\"relay\":\"255\"}}", new SendDataListener() {
+            @Override
+            public void sendFaild(int errorCode, String message) {
+
+            }
+
+            @Override
+            public void sendSuccess() {
+
+            }
+        });
     }
 
     public void clearDeviceList(View v){
