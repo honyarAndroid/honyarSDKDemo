@@ -87,7 +87,7 @@ public class EsptouchDemoActivity extends BaseActivity implements OnClickListene
 	}
 
 	private void initdata(){
-		SDKHonyarSupport.getInstance().setNewDeviceConnectListener(this);
+		SDKHonyarSupport.getInstance().addNewDeviceConnectListener(this);
 		boolean isRemember = pref.getBoolean("remember_password", false);
 		if (isRemember) {
 			String password = pref.getString("password", "");
@@ -120,7 +120,7 @@ public class EsptouchDemoActivity extends BaseActivity implements OnClickListene
 	protected void onDestroy(){
 		super.onDestroy();
 		timer_pause();
-
+		SDKHonyarSupport.getInstance().removeNewDeviceConnectListener(this);
 	}
 
 	@Override

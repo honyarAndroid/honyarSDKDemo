@@ -16,7 +16,7 @@ import com.honyar.SDKHonyarSupport;
 import com.honyar.bean.BaseReqBean;
 import com.honyar.bean.DeviceData102;
 import com.honyar.contract.ClearDeviceListener;
-import com.honyar.contract.DeviceListImp;
+import com.honyar.contract.DeviceListCallBack;
 import com.honyar.contract.DisConnectListener;
 import com.honyar.contract.DeviceUpDataListener;
 import com.honyar.contract.DoFindDeviceResult;
@@ -36,18 +36,30 @@ public class MainActivity extends Activity implements DisConnectListener,DeviceU
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        initData();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        initData();
+
+    }
+
+    @Override
+    public void onDestroy(){
+        removeListener();
+        super.onDestroy();
     }
     private void initData(){
-        SDKHonyarSupport.getInstance().setDeviceDisConnectListener(this);
-        SDKHonyarSupport.getInstance().setDeviceUpDataListener(this);
-        SDKHonyarSupport.getInstance().setNewDeviceConnectListener(this);
+        SDKHonyarSupport.getInstance().addDeviceDisConnectListener(this);
+        SDKHonyarSupport.getInstance().addDeviceUpDataListener(this);
+        SDKHonyarSupport.getInstance().addNewDeviceConnectListener(this);
+    }
+
+    private void removeListener(){
+        SDKHonyarSupport.getInstance().removeDeviceDisConnectListener(this);
+        SDKHonyarSupport.getInstance().removeDeviceUpDataListener(this);
+        SDKHonyarSupport.getInstance().removeNewDeviceConnectListener(this);
     }
     public void EspTouchConfig(View v){
         toEspTouchActivity();
@@ -58,7 +70,7 @@ public class MainActivity extends Activity implements DisConnectListener,DeviceU
     }
 
     public void getDeviceList(View v){
-        SDKHonyarSupport.getInstance().getDeviceList(new DeviceListImp() {
+        SDKHonyarSupport.getInstance().getDeviceList(new DeviceListCallBack() {
             @Override
             public void deviceList(List<DeviceData102> devices) {
                 Log.i(TAG,gson.toJson(devices));

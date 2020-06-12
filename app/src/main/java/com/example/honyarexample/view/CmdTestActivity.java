@@ -36,7 +36,7 @@ public class CmdTestActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initdata(){
-        SDKHonyarSupport.getInstance().setDeviceUpDataListener(this);
+        SDKHonyarSupport.getInstance().addDeviceUpDataListener(this);
         deviceData102 = (DeviceData102) getIntent().getSerializableExtra("device");
         send_cmd_button= (Button) findViewById(R.id.send_cmd_button);
         send_cmd_button.setOnClickListener(this);
@@ -56,6 +56,7 @@ public class CmdTestActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void onDestroy(){
+        SDKHonyarSupport.getInstance().removeDeviceUpDataListener(this);
         super.onDestroy();
     }
 
